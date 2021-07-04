@@ -49,7 +49,7 @@ def plot_result(dir_current, dir_save, idx, gt, low, pred, shade, mask):
     v_min, v_max = mean_gt - config.depth_range, mean_gt + config.depth_range
     e_max = config.err_range
 
-    fig = plt.figure(figsize=(10, 6))
+    fig = plt.figure(figsize=(12, 6))
     plt.rcParams["font.size"] = 18
     gs_master = GridSpec(nrows=2,
                         ncols=2,
@@ -101,7 +101,7 @@ def plot_result(dir_current, dir_save, idx, gt, low, pred, shade, mask):
     ''' Shading '''
     ax_misc0.imshow(np.dstack([shade,shade,shade]))
     ''' Error map '''
-    scale = 1000
+    scale = 1000 # m -> mm
     e_max *= scale
     ax_err_low.imshow(err_low*scale, cmap='jet', vmin=0, vmax=e_max)
     ax_err_pred.imshow(err_pred*scale, cmap='jet', vmin=0, vmax=e_max)
@@ -128,7 +128,10 @@ def plot_result(dir_current, dir_save, idx, gt, low, pred, shade, mask):
         cb_pos.x0 + cb_offset, im_pos.y0, cb_pos.x1 - cb_pos.x0,
         im_pos.y1 - im_pos.y0
     ])
-    ax_cb1.set_ylabel('Error [mm]')
+    if scale == 1:
+        ax_cb1.set_ylabel('Error [m]')
+    elif scale == 1000:
+        ax_cb1.set_ylabel('Error [mm]')
 
     ''' Save '''
     plt.savefig(dir_save + 'result-{:03d}.jpg'.format(idx), dpi=300)

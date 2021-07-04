@@ -15,6 +15,7 @@ p = config.size_norm_patch
 patch_rate = config.rate_valid_norm_patch
 
 def norm_diff(pred, gt, mask):
+    ''' Normalize predict to fit scale to GT per image'''
     len_mask = np.sum(mask)
     pred *= mask
     gt *= mask
@@ -28,6 +29,8 @@ def norm_diff(pred, gt, mask):
     return ((pred - mean_pred) * (std_gt / std_pred) + mean_gt) * mask
 
 def norm_diff_pix_patch(pred, gt, mask):
+    ''' Normalize predict to fit scale to GT per local patch'''
+
     shapes = pred.shape
     normed = np.zeros_like(pred)
     new_mask = mask.copy()
@@ -66,6 +69,8 @@ def norm_diff_pix_patch(pred, gt, mask):
     return normed, new_mask
 
 def calc_rmse(pred, gt, mask):
+    ''' Calcurate RMSE with mask'''
+    
     length = np.sum(mask)
     rmse = np.sqrt(np.sum(np.square(pred - gt)*mask) / length)
     return rmse

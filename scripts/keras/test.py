@@ -2,6 +2,7 @@ import os
 import sys
 
 import cv2
+from tqdm import tqdm
 from keras import models
 from keras.callbacks import CSVLogger, ModelCheckpoint
 from keras.engine.training_arrays import predict_loop
@@ -36,7 +37,6 @@ shape_img = config.shape_img
 ''' Data '''
 num = args.num
 ''' Normalization '''
-# is_norm_shade = config.is_norm_shade
 is_norm_diff = config.is_norm_diff
 is_patch_norm = config.is_patch_norm
 ''' Save '''
@@ -47,10 +47,9 @@ is_save_bmp = args.bmp
 os.makedirs(dir_output, exist_ok=True)
 ''' Network '''
 net = network.BuildUnet(num_ch, shape_img)
-print(os.getcwd())
 net.load_weights(file_model_best)
 
-for idx in range(num):
+for idx in tqdm(range(num)):
     ''' Load test data '''
     inputs, gt, low, shade, mask = loader.TestLoader(idx)
     ''' Predict'''
@@ -65,7 +64,7 @@ for idx in range(num):
     if is_norm_diff:
         pred = evaluate.norm_diff(pred, diff, mask)
     if is_patch_norm:
-        pred, mask = evaluate.norm_diff_(pred, diff, mask)
+        pred, mask = evaluate.norm_diff_pix_patch(pred, diff, mask)
         gt *= mask
         low *= mask
         pred *= mask
@@ -77,12 +76,14 @@ for idx in range(num):
     plots.plot_result(dir_current, dir_output, idx, gt, low, pred, shade, mask)
     ''' Save PLY file '''
     if is_save_ply:
-        xyz_gt = tools.convert_depth_to_coords(gt, config.cam_params)
-        xyz_low = tools.convert_depth_to_coords(low, config.cam_params)
         xyz_pred = tools.convert_depth_to_coords(pred, config.cam_params)
-        tools.dump_ply(dir_output + 'ply_gt_{:03d}.ply'.format(idx), xyz_gt.reshape(-1, 3).tolist())
-        tools.dump_ply(dir_output + 'ply_low-{:03d}.ply'.format(idx), xyz_low.reshape(-1, 3).tolist())
         tools.dump_ply(dir_output + 'ply_pred-{:03d}.ply'.format(idx), xyz_pred.reshape(-1, 3).tolist())
+        if config.is_save_ply_gt:
+            xyz_gt = tools.convert_depth_to_coords(gt, config.cam_params)
+            tools.dump_ply(dir_output + 'ply_gt_{:03d}.ply'.format(idx), xyz_gt.reshape(-1, 3).tolist())
+        if config.is_save_ply_low:
+            xyz_low = tools.convert_depth_to_coords(low, config.cam_params)
+            tools.dump_ply(dir_output + 'ply_low-{:03d}.ply'.format(idx), xyz_low.reshape(-1, 3).tolist())
     if is_save_bmp:
         img_pred = tools.pack_float_to_bmp_bgra(pred)
         cv2.imwrite(dir_output + 'pred-{:03d}.bmp'.format(idx),img_pred)

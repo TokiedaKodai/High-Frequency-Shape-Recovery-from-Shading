@@ -7,7 +7,7 @@ shape_patch = (256, 256)
 threshold_depth = 0.1 # Valid distance
 threshold_diff = 0.01 # is close to GT depth
 threshold_shade = 0 # Valid RGB
-threshold_valid = 0.1
+threshold_valid = 0.1 # Rate of valida pix
 
 # Directory
 dir_root = '../../'
@@ -53,6 +53,10 @@ rate_valid_norm_patch = 50
 # Plot
 depth_range = 0.04
 err_range = 0.002
+
+# Save
+is_save_ply_gt = True
+is_save_ply_low = False
 
 # Camera Parameter
 # cam_params = {

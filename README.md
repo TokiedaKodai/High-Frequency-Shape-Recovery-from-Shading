@@ -1,7 +1,7 @@
 # High-Frequency-Shape-Recovery-from-Shading
 Learning based surface high-frequency shape estimator using CNN. It can increase accuracy of sparse depth measured by active stereo method which losts high-frequency shape or unevenness smaller than the density of the projection pattern of object surface. Deep neural network estimates the surface shape from shading image, focused on Shape from Shading methods.
 
-<img width=50% src="images/algorithm_overview.jpg" title="Algorithm Overview">
+<img width=80% src="images/algorithm_overview.jpg" title="Algorithm Overview">
 
 ## Introduction
 One-shot active stereo method using sparse structured light projection pattern can efficiently reconstruct 3D shape from single pattern projected image. However, it can not get dense depth since its pattern encoded spatially. Conventional method densify the sparse depth by interpolation. This results low-resolution depth with smooth object shape and lost of high-frequency shape or small unevenness of object surface.
@@ -16,19 +16,16 @@ Deep neural network structure is convolutional network consisting of encoders an
 Implemented by Python3.
 
 ### Framework
-Supported implementations
+Supported deep learning frameworks
 - Keras
 - PyTorch
 
 ### Requirement
-Need
 - OpenCV
 - Numpy
 - Pandas
 - Matplotlib
-
-Optional
-- tqdm
+- tqdm (optional)
 
 ---
 ## Dataset
@@ -93,15 +90,14 @@ Run with default parameters.
 python train.py
 ```
 
+### Options
 Run with options.
 ```
 python train.py --epoch 200 --lr 0.01 --finetune
 ```
-
-### Options
 - name : folder name to save trained model (str, default:test) 
-- epoch : epoch number (int, default:100) 
-- num : training data number (int, default:100)
+- epoch : epoch number (int, default:10) 
+- num : training data number (int, default:10)
 - lr : learning rate (float, default:0.001)
 - drop : dropout rate (float, default:0.2)
 - batch : batch size (int, default:8)
@@ -109,7 +105,7 @@ python train.py --epoch 200 --lr 0.01 --finetune
 - verbose : print training verbose, 0=None, 1=progress bar, 2=one line (int, default:1)
 - retrain : is re-train model (flag, default:False)
 - finetune : is fine-tune model (flag, default:False)
-- load : is load data on memory to speed up training (flag, default:False)
+- generator : is use training generator (loader), when memory is insufficient (flag, default:False)
 
 ## Pre-trained model
 
@@ -119,14 +115,13 @@ Run with default parameters.
 python test.py
 ```
 
+### Options
 Run with options.
 ```
 python test.py --name pretrained_model --num 20 --ply
 ```
-
-### Options
 - name : folder name to save trained model (str, default:test) 
-- num : test data number (int, default:100)
+- num : test data number (int, default:10)
 - data : kind of data, synthetic or real (str,, default:synthetic)
-- ply : is save point cloud PLY file (flag, default:False)
-- bmp : is save depth image BMP file (flag, default:False)
+- ply : is save point cloud .ply file (flag, default:False)
+- bmp : is save depth image .bmp file (flag, default:False)
