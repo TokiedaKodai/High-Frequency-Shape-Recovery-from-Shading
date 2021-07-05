@@ -39,7 +39,7 @@ class SyntheticGenerator(Sequence):
         self.batches_per_img = int(self.patch_size / batch_size)
         self.batches_per_epoch = int(self.length / batch_size)
 
-        dir_data = config.dir_root_data + config.dir_synthetic
+        dir_data = config.dir_root_data + config.dir_synthetic_train
         self.file_gt = dir_data + config.dir_gt + '{:05d}.bmp'
         self.file_low = dir_data + config.dir_low + '{:05d}.bmp'
         self.file_shade = dir_data + config.dir_shade + '{:05d}.png'
@@ -108,7 +108,7 @@ def TestLoader(idx, start=config.synthetic_test[0], kind='synthetic'):
     idx += start
 
     if kind == 'synthetic':
-        dir_data = config.dir_root_data + config.dir_synthetic
+        dir_data = config.dir_root_data + config.dir_synthetic_test
     elif kind == 'real':
         dir_data = config.dir_root_data + config.dir_real
     file_gt = dir_data + config.dir_gt + '{:05d}.bmp'
@@ -148,7 +148,7 @@ def LoadData(num, start=0):
         int(config.shape_img[1] / config.shape_patch[1])
     )
 
-    dir_data = config.dir_root_data + config.dir_synthetic
+    dir_data = config.dir_root_data + config.dir_synthetic_train
     file_gt = dir_data + config.dir_gt + '{:05d}.bmp'
     file_low = dir_data + config.dir_low + '{:05d}.bmp'
     file_shade = dir_data + config.dir_shade + '{:05d}.png'

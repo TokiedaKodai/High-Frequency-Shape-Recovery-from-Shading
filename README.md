@@ -27,6 +27,25 @@ Supported deep learning frameworks
 - Matplotlib
 - tqdm (optional)
 
+### Download data
+Synthetic training/test data, pre-trained model, and prediction samples of pre-trained model are available.
+Download from Dropbox: 
+https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0
+
+```
+root
+  ├ Data
+  |   ├ synthetic_train (100 tarining data)
+  |   └ synthetic_test (100 test data)
+  ├ Models - pre-train_model (model trained on 500 training data)
+  └ Outputs - pre-train_model (predictions of pre-train_model)
+```
+
+> - Data/synthetic_train : 100 synthetic training data (index: 0 - 100)
+> - Data/synthetic_test : 100 synthetic test data (index: 500 - 600)
+> - Models/pre-train_model : model trained on 500 synthetic training data (index: 0 - 500)
+> - Outputs/pre-train_model : 50 results of pre-train_model on synthetic test data (index: 500 - 550)
+
 ---
 ## Dataset
 ### High-frequency shape
@@ -107,8 +126,6 @@ python train.py --epoch 200 --lr 0.01 --finetune
 - finetune : is fine-tune model (flag, default:False)
 - generator : is use training generator (loader), when memory is insufficient (flag, default:False)
 
-## Pre-trained model
-
 ## Test
 Run with default parameters.
 ```
@@ -118,10 +135,22 @@ python test.py
 ### Options
 Run with options.
 ```
-python test.py --name pretrained_model --num 20 --ply
+python test.py --name pre-train_model --num 20 --ply
 ```
 - name : folder name to save trained model (str, default:test) 
 - num : test data number (int, default:10)
 - data : kind of data, synthetic or real (str,, default:synthetic)
 - ply : is save point cloud .ply file (flag, default:False)
 - bmp : is save depth image .bmp file (flag, default:False)
+
+
+
+## Pre-trained model
+Model trained on 500 synthetic training data is available on Dropbox: https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0
+
+Download pre-trained model and test data, and copy them to  the appropriate folder.
+
+Run
+```
+python test.py --name pre-train_model
+```

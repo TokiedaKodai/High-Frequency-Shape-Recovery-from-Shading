@@ -17,6 +17,8 @@ dir_root_output = dir_root + 'Outputs/'
 
 # Data
 dir_synthetic = 'synthetic/'
+dir_synthetic_train = 'synthetic_train/'
+dir_synthetic_test = 'synthetic_test/'
 dir_real = 'real/'
 dir_gt = 'gt/' # GT depth
 dir_low = 'low/' # Low-res depth
