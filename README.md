@@ -18,17 +18,19 @@ Implemented by Python3.
 ### Framework
 Supported deep learning frameworks
 - Keras
-- PyTorch
+- PyTorch (Now, implementing)
 
 ### Requirement
 - OpenCV
 - Numpy
 - Pandas
 - Matplotlib
+- Scikit-learn
 - tqdm (optional)
 
 ### Download data
 Synthetic training/test data, pre-trained model, and prediction samples of pre-trained model are available.
+
 Download from Dropbox: 
 https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0
 
@@ -37,8 +39,10 @@ root
   ├ Data
   |   ├ synthetic_train (100 tarining data)
   |   └ synthetic_test (100 test data)
-  ├ Models - pre-train_model (model trained on 500 training data)
-  └ Outputs - pre-train_model (predictions of pre-train_model)
+  ├ Models
+  |   └ pre-train_model (model trained on 500 training data)
+  └ Outputs
+      └ pre-train_model (predictions of pre-train_model)
 ```
 
 > - Data/synthetic_train : 100 synthetic training data (index: 0 - 100)
@@ -73,13 +77,13 @@ root
   └ Outputs
 ```
 
-### scripts
+### scripts/
 
 > - keras/
 > - pytorch/
 > - config
 
-### keras
+### keras/
 Script codes for Keras.
 
 > - train
@@ -87,7 +91,7 @@ Script codes for Keras.
 > - network
 > - loader
 
-### pytorch
+### pytorch/
 Script codes for PyTorch.
 
 > - train
@@ -95,7 +99,7 @@ Script codes for PyTorch.
 > - network
 > - loader
 
-### utils
+### utils/
 Utility codes for both implementations.
 
 > - parser

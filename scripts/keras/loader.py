@@ -102,12 +102,12 @@ class SyntheticGenerator(Sequence):
         pass
 
 # Test Loader
-def TestLoader(idx, start=config.synthetic_test[0], kind='synthetic'):
+def TestLoader(idx, start=config.synthetic_test[0], kind='synthetic_test'):
     ''' Data Loader for Test phase '''
 
     idx += start
 
-    if kind == 'synthetic':
+    if kind == 'synthetic_test':
         dir_data = config.dir_root_data + config.dir_synthetic_test
     elif kind == 'real':
         dir_data = config.dir_root_data + config.dir_real

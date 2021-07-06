@@ -38,6 +38,8 @@ synthetic_test = (500, 600)
 file_log = 'training.csv'
 file_model_keras_final = 'model_keras_final.hdf5'
 file_model_keras_best = 'model_keras_best.hdf5'
+file_model_torch_final = 'model_torch_final.pt'
+file_model_torch_best = 'model_keras_torch.pt'
 
 # Inputs
 is_input_low = True # Low-res depth

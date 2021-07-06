@@ -29,7 +29,7 @@ rate_drop = args.drop
 size_batch = args.batch
 rate_val = args.val
 verbose = args.verbose
-is_aug = args.aug
+# is_aug = args.aug
 is_retrain = args.retrain
 is_finetune = args.finetune
 is_use_generator = args.generator
@@ -93,7 +93,7 @@ if is_use_generator:
         max_queue_size=10)
 else:
     ''' Load data '''
-    print('Loading data.')
+    print('Loading data...')
     data_x, data_y = loader.LoadData(num_data)
     print(f'Training patch num: {len(data_x)}')
     net.fit(
@@ -107,5 +107,7 @@ else:
         validation_split=rate_val,
         verbose=verbose
     )
+print('\nTraining end.')
+
 ''' Plot loss graph '''
 plots.plot_graph(dir_current, dir_model, file_log)

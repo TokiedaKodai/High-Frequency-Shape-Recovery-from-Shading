@@ -3,9 +3,6 @@ import sys
 
 import cv2
 from tqdm import tqdm
-from keras import models
-from keras.callbacks import CSVLogger, ModelCheckpoint
-from keras.engine.training_arrays import predict_loop
 
 dir_current = os.path.dirname(os.path.abspath(__file__))
 os.chdir(dir_current)
@@ -74,7 +71,7 @@ for idx in tqdm(range(num)):
 
     ''' Plot results '''
     plots.plot_result(dir_current, dir_output, idx, gt, low, pred, shade, mask)
-    ''' Save PLY file '''
+    ''' Save outputs '''
     if is_save_ply:
         xyz_pred = tools.convert_depth_to_coords(pred, config.cam_params)
         tools.dump_ply(dir_output + 'ply_pred-{:03d}.ply'.format(idx), xyz_pred.reshape(-1, 3).tolist())

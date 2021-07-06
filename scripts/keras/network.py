@@ -2,7 +2,7 @@ import os
 import sys
 
 from keras.layers import Input, Conv2D, Conv2DTranspose
-from keras.layers import MaxPooling2D, UpSampling2D, AveragePooling2D
+from keras.layers import UpSampling2D, AveragePooling2D
 from keras.layers import BatchNormalization, Activation, concatenate, Dropout
 from keras.models import Model
 import keras.backend as K
@@ -12,9 +12,6 @@ os.chdir(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append('../')
 
 import config
-
-threshold_depth = config.threshold_depth
-threshold_diff = config.threshold_diff
 
 
 def BuildUnet(
@@ -104,10 +101,10 @@ def BuildUnet(
     model = Model(input_patch, output_patch)
 
     # Fine-tune part of network
-    if is_finetune_encoder:
+    if is_finetune_encoder: # Encoder
         for l in model.layers[38:]:
             l.trainable = False
-    elif is_finetune_decoder:
+    elif is_finetune_decoder: # Decoder
         for l in model.layers[:38]:
             l.trainable = False
 
