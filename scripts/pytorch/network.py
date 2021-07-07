@@ -3,10 +3,6 @@ import sys
 
 import torch
 import torch.nn as nn
-import torch.optim as optim
-import torch.utils.data as data
-import torchvision
-from torchvision import models, transforms
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append('../')
@@ -18,12 +14,12 @@ class EncodeBlock(nn.Module):
     """
     encode block
     """
-    def __init__(self, ch, dropout):
+    def __init__(self, in_ch, ch, dropout):
         super(EncodeBlock, self).__init__()
 
-        self.bn_1 = nn.BatchNorm2d(ch)
+        self.bn_1 = nn.BatchNorm2d(in_ch)
         self.drop_1 = nn.Dropout2d(dropout)
-        self.conv_1 = nn.Conv2d(ch, ch, (3, 3), padding=(1, 1))
+        self.conv_1 = nn.Conv2d(in_ch, ch, (3, 3), padding=(1, 1))
 
         self.bn_2 = nn.BatchNorm2d(ch)
         self.drop_2 = nn.Dropout2d(dropout)
@@ -33,12 +29,12 @@ class EncodeBlock(nn.Module):
         x = self.bn_1(x)
         x = self.drop_1(x)
         x = self.conv_1(x)
-        x = nn.Tanh(x)
+        x = nn.Tanh()(x)
         
         x = self.bn_2(x)
         x = self.drop_2(x)
         x = self.conv_2(x)
-        x = nn.Tanh(x)
+        x = nn.Tanh()(x)
 
         return x
 
@@ -50,11 +46,11 @@ class DecodeBlock(nn.Module):
         super(DecodeBlock, self).__init__()
 
         self.conv_0 = nn.ConvTranspose2d(in_ch, ch, (3, 3), padding=(1, 1))
-        self.up_0 = nn.Upsample((2, 2))
+        self.up_0 = nn.Upsample(scale_factor=2)
 
-        self.bn_1 = nn.BatchNorm2d(ch)
+        self.bn_1 = nn.BatchNorm2d(ch*2)
         self.drop_1 = nn.Dropout2d(dropout)
-        self.conv_1 = nn.ConvTranspose2d(ch, ch, (3, 3), padding=(1, 1))
+        self.conv_1 = nn.ConvTranspose2d(ch*2, ch, (3, 3), padding=(1, 1))
 
         self.bn_2 = nn.BatchNorm2d(ch)
         self.drop_2 = nn.Dropout2d(dropout)
@@ -63,17 +59,17 @@ class DecodeBlock(nn.Module):
     def forward(self, x, shortcut):
         x = self.conv_0(x)
         x = self.up_0(x)
-        x = torch.cat((x, shortcut), 0)
+        x = torch.cat((x, shortcut), 1) # concat by ch
 
         x = self.bn_1(x)
         x = self.drop_1(x)
         x = self.conv_1(x)
-        x = nn.Tanh(x)
+        x = nn.Tanh()(x)
         
         x = self.bn_2(x)
         x = self.drop_2(x)
         x = self.conv_2(x)
-        x = nn.Tanh(x)
+        x = nn.Tanh()(x)
 
         return x
     
@@ -92,22 +88,22 @@ class BuildUnet(nn.Module):
         super(BuildUnet, self).__init__()
 
         self.conv_0 = nn.Conv2d(num_ch, 8, (3, 3), padding=(1, 1))
-        self.en_0 = EncodeBlock(16, rate_dropout)
+        self.en_0 = EncodeBlock(8, 16, rate_dropout)
 
         self.pool_1 = nn.AvgPool2d((2, 2))
-        self.en_1 = EncodeBlock(32, rate_dropout)
+        self.en_1 = EncodeBlock(16, 32, rate_dropout)
 
         self.pool_2 = nn.AvgPool2d((2, 2))
-        self.en_2 = EncodeBlock(64, rate_dropout)
+        self.en_2 = EncodeBlock(32, 64, rate_dropout)
 
         self.pool_3 = nn.AvgPool2d((2, 2))
-        self.en_3 = EncodeBlock(128, rate_dropout)
+        self.en_3 = EncodeBlock(64, 128, rate_dropout)
 
         self.de_2 = DecodeBlock(128, 64, rate_dropout)
         self.de_1 = DecodeBlock(64, 32, rate_dropout)
         self.de_0 = DecodeBlock(32, 16, rate_dropout)
 
-        self.out = nn.ConvTranspose2d(16, 1, (1, 1), padding=(1, 1))
+        self.out = nn.ConvTranspose2d(16, 1, (1, 1))
 
     def forward(self, x):
         e0 = self.conv_0(x)
@@ -116,15 +112,15 @@ class BuildUnet(nn.Module):
         e1 = self.pool_1(e0)
         e1 = self.en_1(e1)
         
-        e2 = self.pool_1(e1)
-        e2 = self.en_1(e2)
+        e2 = self.pool_2(e1)
+        e2 = self.en_2(e2)
 
-        e3 = self.pool_1(e2)
-        e3 = self.en_1(e3)
+        e3 = self.pool_3(e2)
+        e3 = self.en_3(e3)
 
         d2 = self.de_2(e3, e2)
-        d1 = self.de_2(d2, e1)
-        d0 = self.de_2(d1, e0)
+        d1 = self.de_1(d2, e1)
+        d0 = self.de_0(d1, e0)
 
         output = self.out(d0)
 

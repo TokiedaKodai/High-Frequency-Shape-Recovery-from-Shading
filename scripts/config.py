@@ -17,8 +17,6 @@ dir_root_output = dir_root + 'Outputs/'
 
 # Data
 dir_synthetic = 'synthetic/'
-dir_synthetic_train = 'synthetic_train/'
-dir_synthetic_test = 'synthetic_test/'
 dir_real = 'real/'
 dir_gt = 'gt/' # GT depth
 dir_low = 'low/' # Low-res depth
@@ -63,13 +61,6 @@ is_save_ply_gt = True
 is_save_ply_low = False
 
 # Camera Parameter
-# cam_params = {
-#     'focal_length': 0.037009,
-#     'pix_x': 1.25e-05,
-#     'pix_y': 1.2381443057539635e-05,
-#     'center_x': 790.902,
-#     'center_y': 600.635
-# }
 cam_params = {
     'focal_length': 0.037009,
     'pix_x': 1.25e-05,

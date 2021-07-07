@@ -16,13 +16,14 @@ import config
 from utils import parser, tools, evaluate, plots
 
 os.chdir(dir_current)
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 args = parser.parser_train.parse_args()
 ################################## SETTING ##################################
 ''' Directory, File '''
 dir_model = config.dir_root_model + args.name + '/'
 file_log = dir_model + config.file_log
-file_model_final = dir_model + config.file_model_tprch_final
+file_model_final = dir_model + config.file_model_torch_final
 file_model_best = dir_model + config.file_model_torch_best
 ''' Output directory'''
 dir_output = config.dir_root_output + args.name + '/'
@@ -52,15 +53,16 @@ net.load_state_dict(torch.load(file_model_best))
 
 print('Test...')
 with torch.no_grad():
-    net.eval()
     net.to(device)
+    net.eval()
 
     for idx in tqdm(range(num)):
         ''' Load test data '''
-        inputs, gt, low, shade, mask = loader.TestLoader(idx)
+        x, gt, low, shade, mask = loader.TestLoader(idx)
+        x = x.to(device)
         ''' Predict'''
-        output = net(inputs)
-        pred = output[0, :, :, 0]
+        output = net(x)
+        pred = output[0, 0, :, :]
         pred = pred.cpu().numpy()
         ''' Normalize for evaluation '''
         gt *= mask

@@ -15,6 +15,7 @@ import config
 from utils import parser, tools, evaluate, plots
 
 os.chdir(dir_current)
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 args = parser.parser_train.parse_args()
 ################################## SETTING ##################################
@@ -46,6 +47,7 @@ os.makedirs(dir_output, exist_ok=True)
 net = network.BuildUnet(num_ch, shape_img)
 net.load_weights(file_model_best)
 
+print('Test...')
 for idx in tqdm(range(num)):
     ''' Load test data '''
     inputs, gt, low, shade, mask = loader.TestLoader(idx)

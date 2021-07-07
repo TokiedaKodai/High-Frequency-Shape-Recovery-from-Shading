@@ -13,6 +13,7 @@ import config
 from utils import parser, plots
 
 os.chdir(dir_current)
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 args = parser.parser_train.parse_args()
 ################################## SETTING ##################################
@@ -72,7 +73,6 @@ elif is_finetune:
     net.load_weights(file_model_best)
 
 ''' Training'''
-print('Training...')
 print(f'Training data num: {num_data}')
 if is_use_generator:
     ''' Data Generator '''
@@ -80,6 +80,7 @@ if is_use_generator:
     generator_train = loader.SyntheticGenerator(num_train, batch_size=size_batch)
     generator_val = loader.SyntheticGenerator(num_val, num_train, batch_size=size_batch)
     print(f'Training batch num: {generator_train.batches_per_epoch}')
+    print('Training...')
     net.fit_generator(
         generator_train,
         steps_per_epoch=generator_train.batches_per_epoch,
@@ -96,6 +97,7 @@ else:
     print('Loading data...')
     data_x, data_y = loader.LoadData(num_data)
     print(f'Training patch num: {len(data_x)}')
+    print('Training...')
     net.fit(
         data_x,
         data_y,

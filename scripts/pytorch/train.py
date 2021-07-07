@@ -8,7 +8,7 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import DataLoader
 
 dir_current = os.path.dirname(os.path.abspath(__file__))
 os.chdir(dir_current)
@@ -20,6 +20,7 @@ import config
 from utils import parser, plots
 
 os.chdir(dir_current)
+os.environ['KMP_DUPLICATE_LIB_OK']='True'
 
 args = parser.parser_train.parse_args()
 ################################## SETTING ##################################
@@ -52,17 +53,17 @@ num_val = int(num_data * rate_val)
 
 ################################## FUNCTION ##################################
 ''' Training '''
-def train(net, device, loader, optimizer, loss):
+def train(net, device, loader, optimizer, loss_fnc):
     #initialise counters
     running_loss = 0.0
     loss = []
     net.train()
 
     start_time = time.time()
-    for inputs in loader:
-        x = inputs[:, :3, :, :]
-        gt = inputs[:, 3, :, :]
-        mask = inputs[:, 4, :, :]
+    for data in loader:
+        x = data[:, :3, :, :]
+        gt = data[:, 3, :, :]
+        mask = data[:, 4, :, :]
 
         optimizer.zero_grad()
 
@@ -75,21 +76,24 @@ def train(net, device, loader, optimizer, loss):
         mask = mask.to(device)
         gt = gt.to(device)
 
-        loss = loss(pred, gt)
+        loss = loss_fnc(pred, gt)
         running_loss += loss.item()
         loss.backward()
         optimizer.step()
-
     #end training 
     end_time = time.time()
     running_loss /= len(loader)
 
-    print('  Training Loss :', running_loss, '-- Time:', end_time - start_time, 's', end=verbose)
+    if verbose != 0:
+        if verbose == 1:
+            line_end = '\n'
+        elif verbose == 2:
+            line_end = ' '*8 + '\r'
+        print('  Train Loss :', running_loss, '-- Time:', end_time - start_time, 's', end=line_end)
     torch.save(net.state_dict(), file_model_final)
-
     return running_loss
 ''' Validation '''
-def validate(net, device, loader, optimizer, loss):
+def validate(net, device, loader, optimizer, loss_fnc):
     #initialise counters
     running_loss = 0.0
     loss = []
@@ -101,7 +105,7 @@ def validate(net, device, loader, optimizer, loss):
             x = inputs[:, :3, :, :]
             gt = inputs[:, 3, :, :]
             mask = inputs[:, 4, :, :]
-            
+
             optimizer.zero_grad()
 
             x = x.to(device)
@@ -113,16 +117,18 @@ def validate(net, device, loader, optimizer, loss):
             mask = mask.to(device)
             gt = gt.to(device)
 
-            loss = loss(pred, gt)
+            loss = loss_fnc(pred, gt)
             running_loss += loss.item()
-
     #end training 
     end_time = time.time()
     running_loss /= len(loader)
 
-    print(' '*23, 'Validation Loss :', running_loss, '-- Time:', end_time - start_time, 's', end=verbose)
-    torch.save(net.state_dict(), file_model_final)
-
+    if verbose != 0:
+        if verbose == 1:
+            line_end = '\n'
+        elif verbose == 2:
+            line_end = ' '*8 + '\r'
+        print(' '*25, 'Val Loss :', running_loss, '-- Time:', end_time - start_time, 's', end=line_end)
     return running_loss
 ################################## RUN ##################################
 os.makedirs(dir_model, exist_ok=True)
@@ -133,7 +139,7 @@ device = torch.device("cuda" if cuda else "cpu")
 ''' Model '''
 net = network.BuildUnet(num_ch, rate_drop).float()
 net = net.to(device)
-loss = nn.MSELoss()
+loss_fnc = nn.MSELoss()
 optimizer = optim.Adam(net.parameters(), lr=lr)
 ''' Load Weight '''
 if is_retrain:
@@ -141,7 +147,6 @@ if is_retrain:
 elif is_finetune:
     net.load_state_dict(torch.load(file_model_best))
 ''' Training'''
-print('Training...')
 print(f'Training data num: {num_data}')
 
 print('Loading data...')
@@ -158,11 +163,12 @@ print(f'Number of validation batches: {len(valloader)}')
 
 min_loss = float('inf')
 
+print('Training...')
 for epoch in range(0, end_epoch):
-    print("Epoch: {:5d}/{:5d}".format(epoch + 1, end_epoch), end=' ---- ')
+    print("Epoch: {:4d}/{:4d}".format(epoch + 1, end_epoch), end=' ---- ')
 
-    train_loss = train(net, device, trainloader, optimizer, loss)
-    val_loss = train(net, device, valloader, optimizer, loss)
+    train_loss = train(net, device, trainloader, optimizer, loss_fnc)
+    val_loss = validate(net, device, valloader, optimizer, loss_fnc)
 
     df_log = pd.DataFrame({
         'epoch': [epoch+1], 

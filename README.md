@@ -37,18 +37,16 @@ https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0
 ```
 root
   ├ Data
-  |   ├ synthetic_train (100 tarining data)
-  |   └ synthetic_test (100 test data)
+  |   └ synthetic (200 tarining/test data)
   ├ Models
   |   └ pre-train_model (model trained on 500 training data)
   └ Outputs
       └ pre-train_model (predictions of pre-train_model)
 ```
 
-> - Data/synthetic_train : 100 synthetic training data (index: 0 - 100)
-> - Data/synthetic_test : 100 synthetic test data (index: 500 - 600)
-> - Models/pre-train_model : model trained on 500 synthetic training data (index: 0 - 500)
-> - Outputs/pre-train_model : 50 results of pre-train_model on synthetic test data (index: 500 - 550)
+> - Data/synthetic : 200 synthetic training/test data (index: (training)0 - 99, (test)500 - 599)
+> - Models/pre-train_model : model trained on 500 synthetic training data (index: 0 - 499)
+> - Outputs/pre-train_model : 50 results of pre-train_model on synthetic test data (index: 500 - 549)
 
 ---
 ## Dataset
@@ -84,7 +82,7 @@ root
 > - config
 
 ### keras/
-Script codes for Keras.
+Script python codes for Keras.
 
 > - train
 > - test
@@ -92,7 +90,7 @@ Script codes for Keras.
 > - loader
 
 ### pytorch/
-Script codes for PyTorch.
+Script python codes for PyTorch.
 
 > - train
 > - test
@@ -152,7 +150,7 @@ python test.py --name pre-train_model --num 20 --ply
 ## Pre-trained model
 Model trained on 500 synthetic training data is available on Dropbox: https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0
 
-Download pre-trained model and test data, and copy them to  the appropriate folder.
+Download pre-trained model and synthetic training/test data, and copy them to  the appropriate folder.
 
 Run
 ```
