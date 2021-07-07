@@ -156,3 +156,13 @@ Run
 ```
 python test.py --name pre-train_model
 ```
+
+## Result
+result figure
+
+<img width=80% src="images/result-000.jpg" title="Result">
+
+```
+GT depth    | Low-res depth | Prediction depth
+Shading img | Low-res error | Prediction error
+```
