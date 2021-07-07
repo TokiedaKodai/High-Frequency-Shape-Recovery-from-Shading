@@ -18,7 +18,7 @@ Implemented by Python3.
 ### Framework
 Supported deep learning frameworks
 - Keras
-- PyTorch (Now, implementing)
+- PyTorch
 
 ### Requirement
 - OpenCV
@@ -114,7 +114,7 @@ python train.py
 ### Options
 Run with options.
 ```
-python train.py --epoch 200 --lr 0.01 --finetune
+python train.py --epoch 200 --lr 0.01 --retrain
 ```
 - name : folder name to save trained model (str, default:test) 
 - epoch : epoch number (int, default:10) 

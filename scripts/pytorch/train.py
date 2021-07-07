@@ -185,7 +185,7 @@ for epoch in range(0, end_epoch):
         df_log.to_csv(file_log, mode='a', header=is_header)
     except Exception as e:
         print("log_data Error: " + str(e))
-print('\nTraining end.')
+print('Training end.')
 
 ''' Plot loss graph '''
 plots.plot_graph(dir_current, dir_model, file_log)
