@@ -89,7 +89,7 @@ def train(net, device, loader, optimizer, loss_fnc):
             line_end = '\n'
         elif verbose == 2:
             line_end = ' '*8 + '\r'
-        print('  Train Loss :', running_loss, '-- Time:', end_time - start_time, 's', end=line_end)
+        print(' Train Loss : {:05f} -- Time: {:05f} s'.format(running_loss, end_time - start_time), end=line_end)
     torch.save(net.state_dict(), file_model_final)
     return running_loss
 ''' Validation '''
@@ -128,7 +128,7 @@ def validate(net, device, loader, optimizer, loss_fnc):
             line_end = '\n'
         elif verbose == 2:
             line_end = ' '*8 + '\r'
-        print(' '*25, 'Val Loss :', running_loss, '-- Time:', end_time - start_time, 's', end=line_end)
+        print(' '*24, 'Val Loss : {:05f} -- Time: {:05f} s'.format(running_loss, end_time - start_time), end=line_end)
     return running_loss
 ################################## RUN ##################################
 os.makedirs(dir_model, exist_ok=True)

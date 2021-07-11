@@ -163,6 +163,7 @@ result figure
 <img width=80% src="images/result-000.jpg" title="Result">
 
 ```
-GT depth    | Low-res depth | Prediction depth
-Shading img | Low-res error | Prediction error
+GT depth      | Low-res depth | Prediction depth
+------------------------------------------------
+Shading image | Low-res error | Prediction error
 ```
