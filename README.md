@@ -117,17 +117,19 @@ Run with options.
 ```
 python train.py --epoch 200 --lr 0.01 --retrain
 ```
-- name      : folder name to save trained model (str, default:test) 
-- epoch     : epoch number (int, default:10) 
-- num       : training data number (int, default:10)
-- lr        : learning rate (float, default:0.001)
-- drop      : dropout rate (float, default:0.2)
-- batch     : batch size (int, default:8)
-- val       : validation data rate (float, default:0.3)
-- verbose   : print training verbose, 0=None, 1=progress bar, 2=one line (int, default:1)
-- retrain   : is re-train model (flag, default:False)
-- finetune  : is fine-tune model (flag, default:False)
-- generator : is use training generator (loader), when memory is insufficient (flag, default:False)
+|option    | explanation | type | default |
+|---------:|-------------|:----:|:-------:|
+|name      | folder name to save trained model | str | test |
+|epoch     | epoch number | int | 10 |
+|num       | training data number | int | 10 |
+|lr        | learning rate | float | 0.001 |
+|drop      | dropout rate | float | 0.2 |
+|batch     | batch size | int | 8 |
+|val       | validation data rate | float | 0.3 |
+|verbose   | print training verbose, 0=None, 1=progress bar, 2=one line | int | 1 |
+|retrain   | add to re-train model | flag | False |
+|finetune  | add to fine-tune model |flag | False |
+|generator | add to use training generator (loader), when memory is insufficient | flag | False |
 
 ## Test
 Run with default parameters.
@@ -140,13 +142,13 @@ Run with options.
 ```
 python test.py --name test-run --num 20 --data synthetic --ply
 ```
-- name : folder name to save trained model (str, default:test) 
-- num : test data number (int, default:10)
-- data : kind of data, 'synthetic' or 'real' (str, default:synthetic)
-- ply : is save point cloud .ply file (flag, default:False)
-- bmp : is save depth image .bmp file (flag, default:False)
-
-
+| option | explanation | type | default |
+|-------:|-------------|:----:|:-------:|
+| name   | folder name to save trained model | str | test |
+| num    | test data number | int | 10 |
+| data   | kind of data, 'synthetic' or 'real' | str | synthetic |
+| ply    | add to save point cloud .ply file | flag | False |
+| bmp    | add tp save depth image .bmp file | flag | False |
 
 ## Pre-trained model
 Model trained on 500 synthetic training data is available on Dropbox: https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0
