@@ -106,7 +106,7 @@ Utility python codes for both implementations.
 > - evaluate
 
 ---
-## Trainig
+## Training
 Run with default parameters.
 ```
 python train.py

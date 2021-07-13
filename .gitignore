@@ -1,4 +1,4 @@
-
+# Ignore folders which saves data, model, and outputs
 Data/
 Models/
 Outputs/
