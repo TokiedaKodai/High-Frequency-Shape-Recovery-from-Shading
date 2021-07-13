@@ -142,7 +142,7 @@ python test.py --name pre-train_model --num 20 --ply
 ```
 - name : folder name to save trained model (str, default:test) 
 - num : test data number (int, default:10)
-- data : kind of data, synthetic or real (str,, default:synthetic)
+- data : kind of data, 'synthetic' or 'real' (str, default:synthetic)
 - ply : is save point cloud .ply file (flag, default:False)
 - bmp : is save depth image .bmp file (flag, default:False)
 
