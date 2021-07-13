@@ -3,17 +3,17 @@ shape_img = (1024, 1024)
 shape_patch = (256, 256)
 # shape_patch = (128, 128)
 
-# Threshold
-threshold_depth = 0.1 # Valid distance
-threshold_diff = 0.01 # is close to GT depth
-threshold_shade = 0 # Valid RGB
-threshold_valid = 0.1 # Rate of valida pix
-
 # Directory
 dir_root = '../../'
 dir_root_data = dir_root + 'Data/'
 dir_root_model = dir_root + 'Models/'
 dir_root_output = dir_root + 'Outputs/'
+
+# Threshold
+threshold_depth = 0.1 # Valid distance
+threshold_diff = 0.01 # is close to GT depth
+threshold_shade = 0 # Valid RGB
+threshold_valid = 0.1 # Rate of valida pix
 
 # Data
 dir_synthetic = 'synthetic/'
@@ -37,7 +37,7 @@ file_log = 'training.csv'
 file_model_keras_final = 'model_keras_final.hdf5'
 file_model_keras_best = 'model_keras_best.hdf5'
 file_model_torch_final = 'model_torch_final.pt'
-file_model_torch_best = 'model_keras_torch.pt'
+file_model_torch_best = 'model_torch_best.pt'
 
 # Inputs
 is_input_low = True # Low-res depth
@@ -60,7 +60,7 @@ err_range = 0.002
 is_save_ply_gt = True
 is_save_ply_low = False
 
-# Camera Parameter
+# Camera Intrinsic Parameter
 cam_params = {
     'focal_length': 0.037009,
     'pix_x': 1.25e-05,
