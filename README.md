@@ -138,7 +138,7 @@ python test.py
 ### Options
 Run with options.
 ```
-python test.py --name pre-train_model --num 20 --ply
+python test.py --name test-run --num 20 --data synthetic --ply
 ```
 - name : folder name to save trained model (str, default:test) 
 - num : test data number (int, default:10)
