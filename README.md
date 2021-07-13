@@ -118,7 +118,7 @@ Run with options.
 python train.py --epoch 200 --lr 0.01 --retrain
 ```
 |option    | explanation | type | default |
-|---------:|-------------|:----:|:-------:|
+|---------:|:------------|:----:|:-------:|
 |name      | folder name to save trained model | str | test |
 |epoch     | epoch number | int | 10 |
 |num       | training data number | int | 10 |
@@ -143,7 +143,7 @@ Run with options.
 python test.py --name test-run --num 20 --data synthetic --ply
 ```
 | option | explanation | type | default |
-|-------:|-------------|:----:|:-------:|
+|-------:|:------------|:----:|:-------:|
 | name   | folder name to save trained model | str | test |
 | num    | test data number | int | 10 |
 | data   | kind of data, 'synthetic' or 'real' | str | synthetic |
