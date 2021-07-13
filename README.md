@@ -170,3 +170,6 @@ GT depth      | Low-res depth | Prediction depth
 ------------------------------------------------
 Shading image | Low-res error | Prediction error
 ```
+
+Low-resolution depth which is reconstructed by conventional method, is input into network.
+Network can recover high-frequency shape lost in the low-res, by estimating surface shape from shading image.
