@@ -98,11 +98,12 @@ Script python codes for PyTorch.
 > - loader
 
 ### utils/
-Utility codes for both implementations.
+Utility python codes for both implementations.
 
 > - parser
 > - tools
 > - plots
+> - evaluate
 
 ---
 ## Trainig
