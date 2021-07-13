@@ -117,16 +117,16 @@ Run with options.
 ```
 python train.py --epoch 200 --lr 0.01 --retrain
 ```
-- name : folder name to save trained model (str, default:test) 
-- epoch : epoch number (int, default:10) 
-- num : training data number (int, default:10)
-- lr : learning rate (float, default:0.001)
-- drop : dropout rate (float, default:0.2)
-- batch : batch size (int, default:8)
-- val : validation data rate (float, default:0.3)
-- verbose : print training verbose, 0=None, 1=progress bar, 2=one line (int, default:1)
-- retrain : is re-train model (flag, default:False)
-- finetune : is fine-tune model (flag, default:False)
+- name      : folder name to save trained model (str, default:test) 
+- epoch     : epoch number (int, default:10) 
+- num       : training data number (int, default:10)
+- lr        : learning rate (float, default:0.001)
+- drop      : dropout rate (float, default:0.2)
+- batch     : batch size (int, default:8)
+- val       : validation data rate (float, default:0.3)
+- verbose   : print training verbose, 0=None, 1=progress bar, 2=one line (int, default:1)
+- retrain   : is re-train model (flag, default:False)
+- finetune  : is fine-tune model (flag, default:False)
 - generator : is use training generator (loader), when memory is insufficient (flag, default:False)
 
 ## Test
