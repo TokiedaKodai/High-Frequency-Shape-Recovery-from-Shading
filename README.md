@@ -43,10 +43,11 @@ root
   └ Outputs
       └ pre-train_model (predictions of pre-train_model)
 ```
-
-> - Data/synthetic : 200 synthetic training/test data (index: (training)0 - 99, (test)500 - 599)
-> - Models/pre-train_model : model trained on 500 synthetic training data (index: 0 - 499)
-> - Outputs/pre-train_model : 50 results of pre-train_model on synthetic test data (index: 500 - 549)
+| folder | explanation | data index |
+|-------:|:------------|:----------:|
+| Data/synthetic | 200 synthetic training/test data | training : 0 - 99 </br> test : 500 - 599 |
+| Models/pre-train_model | model trained on 500 synthetic training data | 0 - 499 |
+| Outputs/pre-train_model | 50 results of pre-train_model on synthetic test data | 500 - 549 |
 
 ---
 ## Dataset
@@ -148,7 +149,7 @@ python test.py --name test-run --num 20 --data synthetic --ply
 | num    | test data number | int | 10 |
 | data   | kind of data, 'synthetic' or 'real' | str | synthetic |
 | ply    | add to save point cloud .ply file | flag | False |
-| bmp    | add tp save depth image .bmp file | flag | False |
+| bmp    | add to save depth image .bmp file | flag | False |
 
 ## Pre-trained model
 Model trained on 500 synthetic training data is available on Dropbox: https://www.dropbox.com/sh/3mo6w1s80o9pm9m/AADDA58-sj4xVlRN22Dy2_5Na?dl=0

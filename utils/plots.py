@@ -35,8 +35,8 @@ def plot_graph(dir_current, dir_model, file_log):
 
 def plot_result(dir_current, dir_save, idx, gt, low, pred, shade, mask):
     ''' Plot result 
-    GT depth    | Low depth | Predict depth
-    Shading img | Low error | Predict error
+    GT depth    | Low-res depth | Prediction depth
+    Shading img | Low-res error | Prediction error
     '''
 
     os.chdir(dir_current)
