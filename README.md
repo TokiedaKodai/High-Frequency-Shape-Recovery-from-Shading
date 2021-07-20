@@ -43,7 +43,7 @@ root
   └ Outputs
       └ pre-train_model (predictions of pre-train_model)
 ```
-| folder | explanation | data index |
+| Folder | Description | Data Index |
 |-------:|:------------|:----------:|
 | Data/synthetic | 200 synthetic training/test data | training : 0 - 99 </br> test : 500 - 599 |
 | Models/pre-train_model | model trained on 500 synthetic training data | 0 - 499 |
@@ -118,7 +118,7 @@ Run with options.
 ```
 python train.py --epoch 200 --lr 0.01 --retrain
 ```
-|option    | explanation | type | default |
+| Option   | Description | Type | Default |
 |---------:|:------------|:----:|:-------:|
 |name      | folder name to save trained model | str | test |
 |epoch     | epoch number | int | 10 |
@@ -143,7 +143,7 @@ Run with options.
 ```
 python test.py --name test-run --num 20 --data synthetic --ply
 ```
-| option | explanation | type | default |
+| Option   | Description | Type | Default |
 |-------:|:------------|:----:|:-------:|
 | name   | folder name to save trained model | str | test |
 | num    | test data number | int | 10 |
