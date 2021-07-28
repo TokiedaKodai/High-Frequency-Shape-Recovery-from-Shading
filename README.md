@@ -120,7 +120,7 @@ python train.py --epoch 200 --lr 0.01 --retrain
 ```
 | Option   | Description | Type | Default |
 |---------:|:------------|:----:|:-------:|
-|name      | folder name to save trained model | str | test |
+|name      | folder name of model to save | str | test |
 |epoch     | epoch number | int | 10 |
 |num       | training data number | int | 10 |
 |lr        | learning rate | float | 0.001 |
@@ -145,7 +145,7 @@ python test.py --name test-run --num 20 --data synthetic --ply
 ```
 | Option   | Description | Type | Default |
 |-------:|:------------|:----:|:-------:|
-| name   | folder name to save trained model | str | test |
+| name   | folder name of model to test | str | test |
 | num    | test data number | int | 10 |
 | data   | kind of data, 'synthetic' or 'real' | str | synthetic |
 | ply    | add to save point cloud .ply file | flag | False |
