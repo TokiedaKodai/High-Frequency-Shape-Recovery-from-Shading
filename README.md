@@ -1,4 +1,7 @@
 # High-Frequency-Shape-Recovery-from-Shading
+
+This repository is the deep learning code of this <a href="https://arxiv.org/abs/2108.02937">paper</a>.
+
 Learning based surface high-frequency shape estimator using CNN. It can increase accuracy of sparse depth measured by active stereo method which losts high-frequency shape or unevenness smaller than the density of the projection pattern of object surface. Deep neural network estimates the surface shape from shading image, focused on Shape from Shading methods.
 
 <img width=80% src="images/algorithm_overview.jpg" title="Algorithm Overview">
